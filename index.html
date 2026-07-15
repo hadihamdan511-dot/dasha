@@ -6,8 +6,10 @@
     <title>My Love — Our Story 💗</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <style>
+        /* ─── FONTS ─── */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
 
+        /* ─── RESET ─── */
         * {
             margin: 0;
             padding: 0;
@@ -16,14 +18,11 @@
 
         :root {
             --pink: #f5a0b5;
-            --pink-dark: #d4738a;
             --pink-glow: #fcc8d6;
-            --pink-soft: #ffe0e8;
             --gold: #d4af37;
             --gold-soft: #e8d5a3;
             --dark: #0d0b0c;
             --soft-white: #f5f0ed;
-            --rose: #f7d4d9;
         }
 
         html {
@@ -62,20 +61,20 @@
 
         .heart {
             position: absolute;
-            font-size: 20px;
+            font-size: 18px;
             color: var(--pink);
-            opacity: 0.15;
-            animation: floatHeart 15s infinite linear;
+            opacity: 0.12;
+            animation: floatHeart 18s infinite linear;
         }
 
         @keyframes floatHeart {
             0% { transform: translateY(100vh) rotate(0deg) scale(0.5); opacity: 0; }
-            10% { opacity: 0.15; }
-            90% { opacity: 0.15; }
+            10% { opacity: 0.12; }
+            90% { opacity: 0.12; }
             100% { transform: translateY(-10vh) rotate(720deg) scale(1.2); opacity: 0; }
         }
 
-        /* ─── CINEMATIC LETTERBOX ─── */
+        /* ─── CINEMATIC BARS ─── */
         .cinematic {
             position: fixed;
             left: 0;
@@ -112,7 +111,6 @@
         .section:nth-child(7) { animation-delay: 1.4s; }
         .section:nth-child(8) { animation-delay: 1.6s; }
         .section:nth-child(9) { animation-delay: 1.8s; }
-        .section:nth-child(10) { animation-delay: 2.0s; }
 
         @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
@@ -192,7 +190,7 @@
             50% { transform: translateY(12px); opacity: 1; }
         }
 
-        /* ─── CHAPTER TITLES ─── */
+        /* ─── CHAPTER STYLES ─── */
         .chapter-label {
             font-size: 11px;
             letter-spacing: 8px;
@@ -293,9 +291,9 @@
         /* ─── VIDEO GRID ─── */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            max-width: 1200px;
+            max-width: 900px;
             width: 100%;
             margin: 30px auto 0;
         }
@@ -317,7 +315,7 @@
 
         .video-grid video {
             width: 100%;
-            height: 300px;
+            height: 280px;
             object-fit: cover;
             display: block;
         }
@@ -330,7 +328,7 @@
             transform: translate(-50%, -50%);
             font-size: 40px;
             color: white;
-            opacity: 0.5;
+            opacity: 0.4;
             text-shadow: 0 0 30px rgba(0,0,0,0.5);
             pointer-events: none;
             transition: 0.3s;
@@ -433,7 +431,7 @@
             letter-spacing: 1px;
         }
 
-        .finale .final-message .big-heart {
+        .finale .big-heart {
             font-size: 48px;
             color: var(--pink-glow);
             display: block;
@@ -493,7 +491,7 @@
     <div class="cinematic cinematic-bottom"></div>
 
     <!-- ============================================ -->
-    <!-- HERO — MY LOVE                              -->
+    <!-- HERO                                         -->
     <!-- ============================================ -->
     <section class="hero" id="hero">
         <h1>MY LOVE</h1>
@@ -511,7 +509,7 @@
         <div class="chapter-date">November 15, 2024</div>
         <div class="chapter-text">
             <span class="quote">"I don't usually text first, but you looked too tempting to ignore."</span>
-            A message that changed everything. Two strangers, one screen, and a spark that would grow into something neither of us expected.
+            A message that changed everything. Two strangers, one screen, and a spark that grew into forever.
             <div class="chapter-divider"></div>
             <span class="caption">— The moment it all started</span>
         </div>
@@ -531,8 +529,7 @@
         <div class="chapter-date">December 13, 2024</div>
         <div class="chapter-text">
             <span class="quote">"Will you be mine?"</span>
-            She said yes. And my world has never been the same. 
-            That day, I didn't just get a girlfriend — I found my home.
+            She said yes. And my world has never been the same. That day, I didn't just get a girlfriend — I found my home.
             <div class="chapter-divider"></div>
             <span class="caption">— The best yes of my life</span>
         </div>
@@ -550,15 +547,14 @@
     </section>
 
     <!-- ============================================ -->
-    <!-- CHAPTER 3 — OUR FIRST MONTHS                 -->
+    <!-- CHAPTER 3 — FIRST MONTHS                     -->
     <!-- ============================================ -->
     <section class="section" id="earlydays">
         <div class="chapter-label">Chapter Three</div>
-        <div class="chapter-title">Our First <span class="highlight">Moments</span></div>
+        <div class="chapter-title">First <span class="highlight">Moments</span></div>
         <div class="chapter-date">November — December 2024</div>
         <div class="chapter-text">
-            The beginning of everything. Late-night talks, stolen glances, 
-            and the feeling that we had known each other for lifetimes.
+            Late-night talks, stolen glances, and the feeling we had known each other for lifetimes.
             <div class="chapter-divider"></div>
             <span class="caption">— When forever started feeling real</span>
         </div>
@@ -575,7 +571,7 @@
     </section>
 
     <!-- ============================================ -->
-    <!-- CHAPTER 4 — SIX MONTHS OF US                 -->
+    <!-- CHAPTER 4 — SIX MONTHS                       -->
     <!-- ============================================ -->
     <section class="section" id="flashbacks">
         <div class="chapter-label">Chapter Four</div>
@@ -583,7 +579,7 @@
         <div class="chapter-date">November 2024 — May 2025</div>
         <div class="chapter-text">
             <span class="quote">"You didn't just become my boyfriend. You became my home."</span>
-            Every moment, every laugh, every silent understanding — this is what we built together.
+            Every laugh, every silent understanding — this is what we built together.
             <div class="chapter-divider"></div>
             <span class="caption">— Our little universe</span>
         </div>
@@ -615,28 +611,18 @@
             <div class="video-wrapper"><video src="vids/cutemoments4.mp3" controls playsinline></video></div>
             <div class="video-wrapper"><video src="vids/cutemoments5.mp3" controls playsinline></video></div>
             <div class="video-wrapper"><video src="vids/cutemoments6.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments7.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments8.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments9.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments10.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments11.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments12.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments13.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments14.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments15.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/cutemoments16.mp3" controls playsinline></video></div>
         </div>
     </section>
 
     <!-- ============================================ -->
-    <!-- CHAPTER 5 — WALKS TOGETHER                   -->
+    <!-- CHAPTER 5 — WALKS                            -->
     <!-- ============================================ -->
     <section class="section" id="walks">
         <div class="chapter-label">Chapter Five</div>
         <div class="chapter-title">Walking <span class="highlight">Together</span></div>
         <div class="chapter-date">Every step with you</div>
         <div class="chapter-text">
-            Hand in hand, through the streets of Belarus. Every walk felt like a scene from a movie — because it was ours.
+            Hand in hand through the streets of Belarus. Every walk felt like a scene from a movie — because it was ours.
             <div class="chapter-divider"></div>
             <span class="caption">— Where we wrote our story, step by step</span>
         </div>
@@ -656,7 +642,7 @@
     </section>
 
     <!-- ============================================ -->
-    <!-- CHAPTER 6 — THE DISTANCE                     -->
+    <!-- CHAPTER 6 — DISTANCE                         -->
     <!-- ============================================ -->
     <section class="section" id="distance">
         <div class="chapter-label">Chapter Six</div>
@@ -664,8 +650,7 @@
         <div class="chapter-date">Lebanon — Belarus</div>
         <div class="chapter-text">
             <span class="quote">"It hurts without you."</span>
-            You watched my flight home. Every mile between us, you felt it too. 
-            But distance is just a chapter — not the whole story.
+            You watched my flight home. Every mile between us, you felt it too. But distance is just a chapter — not the whole story.
             <div class="chapter-divider"></div>
             <span class="caption">— Waiting for the day I hold you again</span>
         </div>
@@ -702,8 +687,6 @@
             <div class="video-wrapper"><video src="vids/sur2.mp3" controls playsinline></video></div>
             <div class="video-wrapper"><video src="vids/sur3.mp3" controls playsinline></video></div>
             <div class="video-wrapper"><video src="vids/sur4.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/sur5.mp3" controls playsinline></video></div>
-            <div class="video-wrapper"><video src="vids/sur6.mp3" controls playsinline></video></div>
         </div>
     </section>
 
@@ -716,9 +699,9 @@
         <div class="chapter-date">🌸 Where everything is pink 🌸</div>
         <div class="chapter-text">
             <span class="quote">"She wants to live in her pink world."</span>
-            And honestly? She deserves it. Pink sunsets, pink dreams, and one very special pink tractor 🚜💗
+            Pink sunsets, pink dreams, and one very special pink tractor 🚜💗
             <div class="chapter-divider"></div>
-            <span class="caption">— The world you deserve, painted in your favorite color</span>
+            <span class="caption">— The world you deserve, in your favorite color</span>
         </div>
         <div style="margin-top: 30px; max-width: 400px; width: 100%;">
             <img src="images/mpb.jpg" alt="My pink barbie" style="width: 100%; height: 450px; object-fit: cover; border-radius: 24px; border: 3px solid rgba(245, 160, 181, 0.15); box-shadow: 0 0 80px rgba(245, 160, 181, 0.05);">
@@ -739,28 +722,26 @@
             </p>
             <p>
                 From the moment I sent that first message, I had no idea my life was about to change forever. 
-                November 15 was just a date on the calendar — until it became the day I found you.
+                November 15 was just a date — until it became the day I found you.
             </p>
             <p>
                 December 13, when you said "yes," I didn't just get a girlfriend. I found my home. 
-                You became the person I think about first in the morning and the last before I sleep.
+                You became the person I think about first in the morning and last before I sleep.
             </p>
             <p>
-                I know distance is hard. I know you've had nightmares, fears, and moments of doubt. 
+                I know distance is hard. I know you've had nightmares and fears. 
                 But I need you to hear this: <strong style="color: var(--pink-glow);">I am not going anywhere.</strong> 
                 You are my home. And home isn't a place — it's you.
             </p>
             <p>
-                You watched my flight home. You stayed up late for calls. You sent me messages that made my heart ache 
-                because I missed you so much. And through all of that, you showed me what real love looks like.
+                You watched my flight home. You stayed up late for calls. You showed me what real love looks like.
             </p>
             <p>
-                Today, you turn 18. The most beautiful girl I've ever met, stepping into a new chapter of her life. 
-                And I'm so grateful that I get to be part of it.
+                Today, you turn 18. The most beautiful girl I've ever met. 
+                And I'm so grateful I get to be part of your life.
             </p>
             <p>
-                Thank you for loving me. For choosing me. For being my pink world, my calm harbor, 
-                and my wildest adventure all at once.
+                Thank you for loving me. For choosing me. For being my pink world.
             </p>
             <p>
                 I love you — to the very last star and back. 💗
@@ -770,7 +751,7 @@
     </section>
 
     <!-- ============================================ -->
-    <!-- FINALE — HAPPY BIRTHDAY                      -->
+    <!-- FINALE                                       -->
     <!-- ============================================ -->
     <section class="finale" id="finale">
         <h1>HAPPY 18TH</h1>
@@ -791,19 +772,19 @@
         November 15 — Forever
     </footer>
 
-    <!-- ─── JAVASCRIPT FOR FLOATING HEARTS ─── -->
+    <!-- ─── JAVASCRIPT ─── -->
     <script>
         function createHearts() {
             const container = document.getElementById('hearts');
-            const heartSymbols = ['💗', '💕', '💖', '💘', '💝', '🌸'];
-            for (let i = 0; i < 30; i++) {
+            const symbols = ['💗', '💕', '💖', '💘', '💝', '🌸'];
+            for (let i = 0; i < 25; i++) {
                 const heart = document.createElement('span');
                 heart.className = 'heart';
-                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
                 heart.style.left = Math.random() * 100 + '%';
-                heart.style.fontSize = (Math.random() * 20 + 12) + 'px';
-                heart.style.animationDuration = (Math.random() * 20 + 12) + 's';
-                heart.style.animationDelay = (Math.random() * 20) + 's';
+                heart.style.fontSize = (Math.random() * 18 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 18 + 12) + 's';
+                heart.style.animationDelay = (Math.random() * 18) + 's';
                 container.appendChild(heart);
             }
         }
