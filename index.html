@@ -22,12 +22,14 @@
     }
 
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--white); overflow-x: hidden; cursor: none; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--dark);
-      color: var(--white);
-      overflow-x: hidden;
+    /* CUSTOM CURSOR */
+    .cursor {
+      position: fixed; width: 20px; height: 20px;
+      pointer-events: none; z-index: 99999;
+      font-size: 16px; transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
     }
 
     ::-webkit-scrollbar { width: 2px; }
@@ -35,25 +37,79 @@
     ::-webkit-scrollbar-thumb { background: var(--pink); }
 
     /* HEARTS */
-    .hearts-container {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
-    }
-    .heart {
-      position: absolute; bottom: -50px; font-size: 14px; opacity: 0;
-      animation: floatHeart linear infinite;
-    }
+    .hearts-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .heart { position: absolute; bottom: -50px; opacity: 0; animation: floatHeart linear infinite; }
     @keyframes floatHeart {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
-      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.7; }
+      50% { opacity: 0.4; }
+      100% { transform: translateY(-110vh) rotate(25deg) scale(0.5); opacity: 0; }
     }
 
     /* CINEMATIC BARS */
-    .bar-top, .bar-bottom {
-      position: fixed; left: 0; right: 0; height: 60px;
-      background: #000; z-index: 100;
-    }
+    .bar-top, .bar-bottom { position: fixed; left: 0; right: 0; height: 55px; background: #000; z-index: 100; }
     .bar-top { top: 0; }
     .bar-bottom { bottom: 0; }
+
+    /* MUSIC PLAYER */
+    .music-player {
+      position: fixed; bottom: 70px; right: 20px; z-index: 200;
+      background: rgba(10,6,8,0.9); border: 1px solid rgba(244,167,195,0.2);
+      border-radius: 50px; padding: 10px 18px;
+      display: flex; align-items: center; gap: 12px;
+      backdrop-filter: blur(10px);
+    }
+    .music-info { display: flex; flex-direction: column; }
+    .music-title { font-size: 10px; letter-spacing: 2px; color: var(--pink); }
+    .music-artist { font-size: 9px; color: var(--gray); letter-spacing: 1px; }
+    .music-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--pink); font-size: 18px; padding: 0;
+      transition: transform 0.3s;
+    }
+    .music-btn:hover { transform: scale(1.2); }
+    .music-wave { display: flex; gap: 2px; align-items: center; }
+    .music-wave span {
+      display: block; width: 2px; background: var(--pink);
+      border-radius: 2px; animation: wave 0.8s ease-in-out infinite;
+    }
+    .music-wave span:nth-child(1) { height: 8px; animation-delay: 0s; }
+    .music-wave span:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+    .music-wave span:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+    .music-wave span:nth-child(4) { height: 16px; animation-delay: 0.15s; }
+    .music-wave span:nth-child(5) { height: 8px; animation-delay: 0.05s; }
+    .music-wave.paused span { animation-play-state: paused; }
+    @keyframes wave {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.4); }
+    }
+
+    /* NAV */
+    .story-nav {
+      position: fixed; top: 55px; left: 0; right: 0; z-index: 99;
+      display: flex; justify-content: center; padding: 12px 20px;
+      gap: 5px; flex-wrap: wrap;
+      background: linear-gradient(rgba(10,6,8,0.95), transparent);
+    }
+    .story-nav a {
+      font-size: 9px; letter-spacing: 2px; color: rgba(244,167,195,0.5);
+      text-decoration: none; padding: 5px 12px;
+      border: 1px solid rgba(244,167,195,0.1);
+      border-radius: 20px; transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .story-nav a:hover, .story-nav a.active {
+      color: var(--pink); border-color: rgba(244,167,195,0.4);
+      background: rgba(244,167,195,0.05);
+    }
+
+    /* COUNTDOWN */
+    .countdown-bar {
+      position: fixed; top: 55px; left: 0; right: 0; z-index: 98;
+      text-align: center; padding: 6px;
+      background: rgba(244,167,195,0.06);
+      border-bottom: 1px solid rgba(244,167,195,0.1);
+      font-size: 10px; letter-spacing: 3px; color: var(--gold);
+    }
 
     /* SECTIONS */
     section { position: relative; z-index: 1; }
@@ -62,249 +118,132 @@
     .hero {
       height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      position: relative; overflow: hidden; text-align: center;
-      padding: 60px 20px;
+      position: relative; overflow: hidden; text-align: center; padding: 60px 20px;
     }
-    .hero-bg {
-      position: absolute; inset: 0;
-    }
-    .hero-bg img {
-      width: 100%; height: 100%; object-fit: cover;
-      opacity: 0.25; filter: blur(2px);
-    }
+    .hero-bg { position: absolute; inset: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; filter: blur(1px); }
     .hero-bg::after {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center, rgba(10,6,8,0.3) 0%, rgba(10,6,8,0.85) 100%);
+      background: radial-gradient(ellipse at center, rgba(10,6,8,0.2) 0%, rgba(10,6,8,0.85) 100%);
     }
     .hero-content { position: relative; z-index: 1; }
-    .hero-date {
-      font-size: 11px; letter-spacing: 6px; color: var(--gold);
-      margin-bottom: 30px; opacity: 0;
-      animation: fadeUp 1.2s ease forwards 0.3s;
-    }
+    .hero-date { font-size: 11px; letter-spacing: 6px; color: var(--gold); margin-bottom: 30px; opacity: 0; animation: fadeUp 1.2s ease forwards 0.3s; }
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(60px, 12vw, 130px);
-      font-weight: 900;
+      font-size: clamp(60px, 13vw, 140px); font-weight: 900;
       color: var(--pink);
-      text-shadow: 0 0 60px rgba(244,167,195,0.4), 0 0 120px rgba(244,167,195,0.2);
-      line-height: 1;
-      margin-bottom: 25px;
-      opacity: 0;
-      animation: fadeUp 1.2s ease forwards 0.6s;
+      text-shadow: 0 0 40px rgba(244,167,195,0.5), 0 0 80px rgba(244,167,195,0.25), 0 0 160px rgba(244,167,195,0.1);
+      line-height: 1; margin-bottom: 25px;
+      opacity: 0; animation: fadeUp 1.2s ease forwards 0.6s;
     }
-    .hero-sub {
-      font-size: 16px; letter-spacing: 4px; color: var(--gold);
-      margin-bottom: 20px; opacity: 0;
-      animation: fadeUp 1.2s ease forwards 0.9s;
-    }
-    .hero-forever {
-      font-family: 'Playfair Display', serif;
-      font-style: italic; color: rgba(244,167,195,0.6);
-      font-size: 18px; opacity: 0;
-      animation: fadeUp 1.2s ease forwards 1.2s;
-    }
-    .scroll-hint {
-      position: absolute; bottom: 80px; left: 50%;
-      transform: translateX(-50%); opacity: 0;
-      animation: fadeUp 1s ease forwards 2s;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-    }
-    .scroll-hint span { font-size: 10px; letter-spacing: 3px; color: var(--gray); }
-    .scroll-line { width: 1px; height: 50px; background: linear-gradient(var(--pink), transparent); }
+    .hero-sub { font-size: 16px; letter-spacing: 5px; color: var(--gold); margin-bottom: 20px; opacity: 0; animation: fadeUp 1.2s ease forwards 0.9s; }
+    .hero-forever { font-family: 'Playfair Display', serif; font-style: italic; color: rgba(244,167,195,0.55); font-size: 20px; opacity: 0; animation: fadeUp 1.2s ease forwards 1.2s; }
+    .hero-scroll { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); opacity: 0; animation: fadeUp 1s ease forwards 2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .hero-scroll span { font-size: 9px; letter-spacing: 4px; color: var(--gray); }
+    .scroll-line { width: 1px; height: 50px; background: linear-gradient(var(--pink), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* CHAPTER */
-    .chapter {
-      padding: 120px 40px; max-width: 800px; margin: 0 auto;
+    /* DAYS COUNTER */
+    .days-counter {
+      position: absolute; bottom: 80px; right: 60px; z-index: 1;
       text-align: center;
     }
-    .chapter-num {
-      font-size: 10px; letter-spacing: 6px; color: var(--gold);
-      margin-bottom: 20px; display: block;
-      opacity: 0; transform: translateY(20px);
-      transition: all 0.8s ease;
-    }
+    .days-num { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; color: var(--pink); line-height: 1; }
+    .days-label { font-size: 9px; letter-spacing: 3px; color: var(--gray); margin-top: 5px; }
+
+    /* CHAPTER */
+    .chapter { padding: 120px 40px; max-width: 800px; margin: 0 auto; text-align: center; }
+    .chapter-num { font-size: 10px; letter-spacing: 6px; color: var(--gold); margin-bottom: 20px; display: block; opacity: 0; transform: translateY(20px); transition: all 0.8s ease; }
     .chapter-num.visible { opacity: 1; transform: translateY(0); }
-    .chapter-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(32px, 6vw, 56px);
-      font-weight: 700; line-height: 1.1;
-      margin-bottom: 30px; color: var(--white);
-      opacity: 0; transform: translateY(25px);
-      transition: all 0.8s ease 0.15s;
-    }
+    .chapter-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 56px); font-weight: 700; line-height: 1.1; margin-bottom: 30px; color: var(--white); opacity: 0; transform: translateY(25px); transition: all 0.8s ease 0.15s; }
     .chapter-title.visible { opacity: 1; transform: translateY(0); }
     .chapter-title em { color: var(--pink); font-style: italic; }
-    .chapter-quote {
-      font-family: 'Playfair Display', serif;
-      font-style: italic; font-size: clamp(18px, 3vw, 26px);
-      color: var(--pink); line-height: 1.6;
-      margin-bottom: 35px; padding: 0 20px;
-      border-left: 2px solid var(--pink-deep);
-      text-align: left;
-      opacity: 0; transform: translateY(20px);
-      transition: all 0.8s ease 0.25s;
-    }
+    .chapter-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(18px, 3vw, 26px); color: var(--pink); line-height: 1.6; margin-bottom: 35px; padding: 20px 30px; border-left: 2px solid var(--pink-deep); text-align: left; opacity: 0; transform: translateY(20px); transition: all 0.8s ease 0.25s; background: rgba(244,167,195,0.03); }
     .chapter-quote.visible { opacity: 1; transform: translateY(0); }
-    .chapter-text {
-      font-size: 16px; line-height: 1.9; color: rgba(253,246,249,0.7);
-      font-weight: 300;
-      opacity: 0; transform: translateY(20px);
-      transition: all 0.8s ease 0.35s;
-    }
+    .chapter-text { font-size: 16px; line-height: 1.9; color: rgba(253,246,249,0.65); font-weight: 300; opacity: 0; transform: translateY(20px); transition: all 0.8s ease 0.35s; }
     .chapter-text.visible { opacity: 1; transform: translateY(0); }
 
     /* DIVIDER */
-    .divider {
-      display: flex; align-items: center; justify-content: center;
-      gap: 20px; padding: 20px 40px; max-width: 600px; margin: 0 auto;
-    }
-    .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(244,167,195,0.3), transparent); }
-    .divider-icon { color: var(--pink); font-size: 12px; opacity: 0.6; }
+    .divider { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 20px 40px; max-width: 600px; margin: 0 auto; }
+    .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(244,167,195,0.25), transparent); }
+    .divider-icon { color: var(--pink); font-size: 14px; opacity: 0.5; }
 
     /* PHOTO GRID */
-    .photo-section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
-    .photo-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .photo-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-    .photo-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
-    .photo-grid-hero { display: grid; grid-template-columns: 1.5fr 1fr; gap: 8px; }
+    .photo-section { padding: 20px; max-width: 1200px; margin: 0 auto; }
+    .photo-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .photo-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+    .photo-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; }
     .photo-item { overflow: hidden; position: relative; }
-    .photo-item img {
-      width: 100%; height: 300px; object-fit: cover;
-      transition: transform 0.6s ease; filter: brightness(0.9);
-    }
-    .photo-item:hover img { transform: scale(1.04); filter: brightness(1); }
-    .photo-item.tall img { height: 450px; }
-    .photo-item.short img { height: 200px; }
+    .photo-item img { width: 100%; height: 280px; object-fit: cover; transition: transform 0.7s ease; filter: brightness(0.88) saturate(0.9); }
+    .photo-item:hover img { transform: scale(1.04); filter: brightness(1) saturate(1); }
+    .photo-item.tall img { height: 420px; }
 
-    /* VIDEO SECTION */
-    .video-section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
-    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .video-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
-    .video-item video {
-      width: 100%; border-radius: 4px;
-      outline: none; max-height: 400px; object-fit: cover;
-    }
+    /* VIDEO */
+    .video-section { padding: 20px; max-width: 1200px; margin: 0 auto; }
+    .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .video-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .video-item video { width: 100%; border-radius: 3px; outline: none; max-height: 380px; object-fit: cover; }
 
     /* DATE TAG */
-    .date-tag {
-      display: inline-block; padding: 8px 20px;
-      border: 1px solid rgba(244,167,195,0.3);
-      font-size: 11px; letter-spacing: 3px; color: var(--pink);
-      margin-bottom: 30px;
-    }
+    .date-tag { display: inline-block; padding: 8px 22px; border: 1px solid rgba(244,167,195,0.25); font-size: 10px; letter-spacing: 4px; color: var(--pink); margin-bottom: 30px; border-radius: 20px; }
+
+    /* PINK WORLD */
+    .pink-world { background: linear-gradient(135deg, rgba(244,167,195,0.05), rgba(212,175,122,0.03)); padding: 80px 40px; text-align: center; }
+    .pink-emoji { font-size: 50px; margin-bottom: 20px; display: block; }
 
     /* LOVE LETTER */
-    .love-letter {
-      max-width: 700px; margin: 0 auto; padding: 80px 40px;
-      text-align: left;
-    }
+    .love-letter { max-width: 700px; margin: 0 auto; padding: 60px 40px; }
     .letter-paper {
-      background: rgba(244,167,195,0.04);
-      border: 1px solid rgba(244,167,195,0.15);
-      padding: 60px; border-radius: 2px;
-      position: relative;
+      background: rgba(244,167,195,0.03); border: 1px solid rgba(244,167,195,0.12);
+      padding: 60px; border-radius: 2px; position: relative;
     }
-    .letter-paper::before {
-      content: '💗';
-      position: absolute; top: 25px; right: 30px; font-size: 20px; opacity: 0.4;
-    }
-    .letter-greeting {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px; color: var(--pink);
-      margin-bottom: 30px; font-style: italic;
-    }
-    .letter-body {
-      font-size: 16px; line-height: 2; color: rgba(253,246,249,0.75);
-      font-weight: 300; margin-bottom: 20px;
-    }
-    .letter-signature {
-      font-family: 'Playfair Display', serif;
-      font-style: italic; color: var(--gold);
-      font-size: 20px; margin-top: 40px;
-    }
+    .letter-paper::before { content: '💗'; position: absolute; top: 25px; right: 30px; font-size: 20px; opacity: 0.3; }
+    .letter-paper::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--pink-deep), transparent); }
+    .letter-greeting { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--pink); margin-bottom: 30px; font-style: italic; }
+    .letter-body { font-size: 15px; line-height: 2.1; color: rgba(253,246,249,0.72); font-weight: 300; margin-bottom: 20px; }
+    .letter-signature { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); font-size: 22px; margin-top: 45px; }
 
     /* FINALE */
-    .finale {
-      height: 100vh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; padding: 60px 20px;
-      position: relative; overflow: hidden;
-    }
-    .finale-bg {
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at center, rgba(244,167,195,0.08) 0%, transparent 70%);
-    }
+    .finale { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 20px; position: relative; overflow: hidden; }
+    .finale-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(244,167,195,0.07) 0%, transparent 70%); }
     .finale-content { position: relative; z-index: 1; }
-    .finale-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(50px, 10vw, 110px);
-      font-weight: 900; color: var(--white);
-      text-shadow: 0 0 80px rgba(244,167,195,0.3);
-      margin-bottom: 20px;
-    }
-    .finale-sub {
-      font-size: 14px; letter-spacing: 5px;
-      color: var(--gold); margin-bottom: 40px;
-    }
-    .finale-message {
-      font-family: 'Playfair Display', serif;
-      font-style: italic; font-size: clamp(16px, 2.5vw, 22px);
-      color: rgba(253,246,249,0.7); max-width: 600px;
-      line-height: 1.8; margin-bottom: 30px;
-    }
-    .finale-love {
-      font-size: clamp(22px, 4vw, 36px);
-      color: var(--pink); font-family: 'Playfair Display', serif;
-      margin-bottom: 15px;
-    }
-    .finale-soon {
-      font-size: 14px; letter-spacing: 2px;
-      color: var(--gray); font-style: italic;
-    }
-
-    /* PINK WORLD SECTION */
-    .pink-world {
-      background: linear-gradient(135deg, rgba(244,167,195,0.06), rgba(212,175,122,0.04));
-      padding: 80px 40px; text-align: center;
-    }
-    .pink-emoji { font-size: 48px; margin-bottom: 20px; display: block; }
+    .finale-title { font-family: 'Playfair Display', serif; font-size: clamp(50px, 10vw, 110px); font-weight: 900; color: var(--white); text-shadow: 0 0 80px rgba(244,167,195,0.25); margin-bottom: 20px; }
+    .finale-sub { font-size: 14px; letter-spacing: 5px; color: var(--gold); margin-bottom: 40px; }
+    .finale-message { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(16px, 2.5vw, 22px); color: rgba(253,246,249,0.65); max-width: 600px; line-height: 1.8; margin-bottom: 30px; }
+    .finale-love { font-size: clamp(22px, 4vw, 36px); color: var(--pink); font-family: 'Playfair Display', serif; margin-bottom: 15px; }
+    .finale-soon { font-size: 14px; letter-spacing: 2px; color: var(--gray); font-style: italic; }
 
     /* FOOTER */
-    footer {
-      padding: 60px 40px 100px; text-align: center;
-      border-top: 1px solid rgba(244,167,195,0.1);
-    }
-    footer p { color: var(--gray); font-size: 13px; letter-spacing: 1px; line-height: 2; }
+    footer { padding: 60px 40px 100px; text-align: center; border-top: 1px solid rgba(244,167,195,0.08); }
+    footer p { color: var(--gray); font-size: 12px; letter-spacing: 1px; line-height: 2.2; }
     footer .footer-heart { color: var(--pink); }
 
-    /* FADE IN ON SCROLL */
-    .fade-in {
-      opacity: 0; transform: translateY(30px);
-      transition: all 0.9s ease;
-    }
+    /* FADE IN */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.9s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     /* MOBILE */
     @media (max-width: 768px) {
       .bar-top, .bar-bottom { height: 40px; }
+      .story-nav { display: none; }
+      .countdown-bar { top: 40px; }
+      .days-counter { display: none; }
       .photo-grid-3 { grid-template-columns: 1fr 1fr; }
       .photo-grid-4 { grid-template-columns: 1fr 1fr; }
-      .photo-grid-hero { grid-template-columns: 1fr; }
       .video-grid { grid-template-columns: 1fr; }
       .video-grid-3 { grid-template-columns: 1fr 1fr; }
-      .chapter { padding: 80px 25px; }
-      .letter-paper { padding: 35px 25px; }
-      .love-letter { padding: 60px 20px; }
+      .chapter { padding: 80px 20px; }
+      .letter-paper { padding: 30px 20px; }
+      .love-letter { padding: 40px 15px; }
+      .music-player { bottom: 55px; right: 10px; padding: 8px 14px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor">💗</div>
 
   <!-- HEARTS -->
   <div class="hearts-container" id="hearts"></div>
@@ -312,6 +251,40 @@
   <!-- BARS -->
   <div class="bar-top"></div>
   <div class="bar-bottom"></div>
+
+  <!-- COUNTDOWN BAR -->
+  <div class="countdown-bar" id="countdownBar">Loading...</div>
+
+  <!-- STORY NAV -->
+  <nav class="story-nav">
+    <a href="#chapter1">The Beginning</a>
+    <a href="#chapter2">The Question</a>
+    <a href="#chapter3">First Moments</a>
+    <a href="#chapter4">Seven Months</a>
+    <a href="#chapter5">Our Walks</a>
+    <a href="#chapter6">Just Us</a>
+    <a href="#chapter7">The Distance</a>
+    <a href="#chapter8">Surprises</a>
+    <a href="#chapter9">Pink World</a>
+    <a href="#letter">Love Letter</a>
+  </nav>
+
+  <!-- MUSIC PLAYER -->
+  <div class="music-player">
+    <div class="music-wave" id="musicWave">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="music-info">
+      <span class="music-title">LOVE SONG</span>
+      <span class="music-artist">Adele</span>
+    </div>
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+      <i class="fas fa-pause" id="musicIcon"></i>
+    </button>
+  </div>
+  <audio id="bgMusic" loop>
+    <source src="audio/song.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- HERO -->
   <section class="hero" id="hero">
@@ -324,27 +297,27 @@
       <div class="hero-sub">✦ Our Story ✦</div>
       <div class="hero-forever">November 15 — Forever</div>
     </div>
-    <div class="scroll-hint">
+    <div class="days-counter">
+      <div class="days-num" id="daysCount">—</div>
+      <div class="days-label">DAYS TOGETHER</div>
+    </div>
+    <div class="hero-scroll">
       <span>SCROLL</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
   <!-- CHAPTER 1 -->
-  <section>
+  <section id="chapter1">
     <div class="chapter">
       <span class="chapter-num">CHAPTER ONE ✦ NOVEMBER 15, 2025</span>
       <h2 class="chapter-title">The <em>Beginning</em></h2>
       <blockquote class="chapter-quote">"I don't usually text first, but you looked too tempting to ignore."</blockquote>
       <p class="chapter-text">One message. That's all it took. On November 15, 2025, I opened Telegram and typed the first words that would change everything. I don't know what I was thinking — maybe I wasn't thinking at all. Maybe something in me just knew. That night, something shifted. And nothing has been the same since.</p>
     </div>
-
     <div class="photo-section fade-in">
-      <div class="photo-grid-hero">
+      <div class="photo-grid-2">
         <div class="photo-item tall">
-          <img src="images/amazingmessage.jpg.jpeg" alt="First message" loading="lazy">
-        </div>
-        <div class="photo-item">
           <img src="images/dorm.jpeg" alt="Us" loading="lazy">
         </div>
       </div>
@@ -354,7 +327,7 @@
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
   <!-- CHAPTER 2 -->
-  <section>
+  <section id="chapter2">
     <div class="chapter">
       <span class="chapter-num">CHAPTER TWO ✦ DECEMBER 13, 2025</span>
       <h2 class="chapter-title">The <em>Question</em></h2>
@@ -365,52 +338,37 @@
 
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
-  <!-- CHAPTER 3 — FIRST MOMENTS -->
-  <section>
+  <!-- CHAPTER 3 -->
+  <section id="chapter3">
     <div class="chapter">
       <span class="chapter-num">CHAPTER THREE ✦ NOVEMBER — DECEMBER 2025</span>
       <h2 class="chapter-title">First <em>Moments</em></h2>
       <p class="chapter-text">Late nights that turned into early mornings. Conversations that never ran out. Stolen glances that said more than words ever could. We talked like we'd known each other for lifetimes — because maybe, in some way, we had. The first kiss, November 16, just after midnight. A chapter I'll never stop rereading.</p>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-2">
-        <div class="photo-item tall">
-          <img src="images/firstkiss.jpg.jpeg" alt="First kiss" loading="lazy">
-        </div>
-        <div class="photo-item tall">
-          <img src="images/cuddling1.jpg.jpeg" alt="Us" loading="lazy">
-        </div>
+        <div class="photo-item tall"><img src="images/firstkiss.jpg.jpeg" alt="First kiss" loading="lazy"></div>
+        <div class="photo-item tall"><img src="images/cuddling1.jpg.jpeg" alt="Us" loading="lazy"></div>
       </div>
     </div>
-
     <div class="video-section fade-in">
       <div class="video-grid">
-        <div class="video-item">
-          <video controls playsinline>
-            <source src="vids/firstdate.mp3.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="video-item">
-          <video controls playsinline>
-            <source src="vids/cuddling1.mp3.mp4" type="video/mp4">
-          </video>
-        </div>
+        <div class="video-item"><video controls playsinline><source src="vids/firstdate.mp3.mp4" type="video/mp4"></video></div>
+        <div class="video-item"><video controls playsinline><source src="vids/cuddling1.mp3.mp4" type="video/mp4"></video></div>
       </div>
     </div>
   </section>
 
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
-  <!-- CHAPTER 4 — SIX MONTHS -->
-  <section>
+  <!-- CHAPTER 4 -->
+  <section id="chapter4">
     <div class="chapter">
       <span class="chapter-num">CHAPTER FOUR ✦ NOVEMBER 2025 — TODAY</span>
       <h2 class="chapter-title">Seven Months <em>of Us</em></h2>
       <blockquote class="chapter-quote">"You didn't just become my boyfriend. You became my home."</blockquote>
       <p class="chapter-text">Seven months. Every laugh, every silence, every late-night call, every moment we built together — it all adds up to something I can't put into words. I didn't expect you. And yet here you are, woven into every corner of my life. That's the thing about the right person — they don't just enter your world. They become it.</p>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-4">
         <div class="photo-item"><img src="images/cutemoments1.jpg.jpeg" alt="" loading="lazy"></div>
@@ -423,7 +381,6 @@
         <div class="photo-item"><img src="images/cutemoments8.jpg.jpeg" alt="" loading="lazy"></div>
       </div>
     </div>
-
     <div class="video-section fade-in">
       <div class="video-grid-3">
         <div class="video-item"><video controls playsinline><source src="vids/cutemoments1.mp3.mp4" type="video/mp4"></video></div>
@@ -434,7 +391,6 @@
         <div class="video-item"><video controls playsinline><source src="vids/cutemoments6.mp3.mp4" type="video/mp4"></video></div>
       </div>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-4">
         <div class="photo-item"><img src="images/cutemoments9.jpg.jpeg" alt="" loading="lazy"></div>
@@ -447,7 +403,6 @@
         <div class="photo-item"><img src="images/cutemoments16.jpg.jpeg" alt="" loading="lazy"></div>
       </div>
     </div>
-
     <div class="video-section fade-in">
       <div class="video-grid-3">
         <div class="video-item"><video controls playsinline><source src="vids/cutemoments7.mp3.mp4" type="video/mp4"></video></div>
@@ -458,7 +413,6 @@
         <div class="video-item"><video controls playsinline><source src="vids/cutemoments12.mp3.mp4" type="video/mp4"></video></div>
       </div>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-4">
         <div class="photo-item"><img src="images/cutemoments17.jpg.jpeg" alt="" loading="lazy"></div>
@@ -467,7 +421,6 @@
         <div class="photo-item"><img src="images/cutemoments20.jpg.jpeg" alt="" loading="lazy"></div>
       </div>
     </div>
-
     <div class="video-section fade-in">
       <div class="video-grid-3">
         <div class="video-item"><video controls playsinline><source src="vids/cutemoments13.mp3.mp4" type="video/mp4"></video></div>
@@ -480,14 +433,13 @@
 
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
-  <!-- CHAPTER 5 — WALKING -->
-  <section>
+  <!-- CHAPTER 5 -->
+  <section id="chapter5">
     <div class="chapter">
       <span class="chapter-num">CHAPTER FIVE ✦ OUR WALKS</span>
       <h2 class="chapter-title">Walking <em>Together</em></h2>
       <p class="chapter-text">Every walk with you felt like a scene from a movie I never wanted to end. The streets of Belarus, the cold air, your hand in mine — there's a kind of magic in the ordinary when it's you beside me. Every corner we turned together became a memory I carry with me, even now, across the distance.</p>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-3">
         <div class="photo-item tall"><img src="images/walking1.jpg.jpeg" alt="" loading="lazy"></div>
@@ -498,18 +450,16 @@
         <div class="photo-item"><img src="images/walking6.jpg.jpeg" alt="" loading="lazy"></div>
       </div>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-2">
         <div class="photo-item tall"><img src="images/walking7.jpg.jpeg" alt="" loading="lazy"></div>
-        <div class="video-item" style="padding: 0;">
-          <video controls playsinline style="width:100%; height:100%; object-fit:cover; max-height:450px;">
+        <div class="video-item" style="padding:0;">
+          <video controls playsinline style="width:100%;height:100%;object-fit:cover;max-height:420px;">
             <source src="vids/walking1.mp3.mp4" type="video/mp4">
           </video>
         </div>
       </div>
     </div>
-
     <div class="video-section fade-in">
       <div class="video-grid">
         <div class="video-item"><video controls playsinline><source src="vids/walking2.mp3.mp4" type="video/mp4"></video></div>
@@ -519,14 +469,13 @@
 
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
-  <!-- CHAPTER 6 — CUDDLING -->
-  <section>
+  <!-- CHAPTER 6 -->
+  <section id="chapter6">
     <div class="chapter">
       <span class="chapter-num">CHAPTER SIX ✦ CLOSE TO YOU</span>
       <h2 class="chapter-title">Just <em>Us</em></h2>
       <p class="chapter-text">There's a version of happiness that doesn't need words. It's quiet. It's warm. It's lying next to you and feeling like the whole world has shrunk down to just this room, just this moment, just us.</p>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-3">
         <div class="photo-item tall"><img src="images/cuddling1.jpg.jpeg" alt="" loading="lazy"></div>
@@ -534,7 +483,6 @@
         <div class="photo-item tall"><img src="images/cuddling3.jpg.jpeg" alt="" loading="lazy"></div>
       </div>
     </div>
-
     <div class="video-section fade-in">
       <div class="video-grid-3">
         <div class="video-item"><video controls playsinline><source src="vids/cuddling2.mp3.mp4" type="video/mp4"></video></div>
@@ -548,22 +496,20 @@
 
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
-  <!-- CHAPTER 7 — THE DISTANCE -->
-  <section>
+  <!-- CHAPTER 7 -->
+  <section id="chapter7">
     <div class="chapter">
       <span class="chapter-num">CHAPTER SEVEN ✦ LEBANON — BELARUS</span>
       <h2 class="chapter-title">The <em>Distance</em></h2>
       <blockquote class="chapter-quote">"It hurts without you."</blockquote>
       <p class="chapter-text">I remember the day I left. You watched my flight home. I don't know how to describe what that feels like — to leave someone who has become your home. The distance is real. The ache is real. But so is this love. And distance is just a chapter. Not the whole story.</p>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-2">
         <div class="photo-item tall"><img src="images/lastday1.jpg.jpeg" alt="" loading="lazy"></div>
         <div class="photo-item tall"><img src="images/mpb.jpg.jpeg" alt="" loading="lazy"></div>
       </div>
     </div>
-
     <div class="video-section fade-in">
       <div class="video-grid">
         <div class="video-item"><video controls playsinline><source src="vids/lastday1.mp3.mp4" type="video/mp4"></video></div>
@@ -574,14 +520,13 @@
 
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
-  <!-- CHAPTER 8 — SURPRISES -->
-  <section>
+  <!-- CHAPTER 8 -->
+  <section id="chapter8">
     <div class="chapter">
       <span class="chapter-num">CHAPTER EIGHT ✦ LITTLE THINGS</span>
       <h2 class="chapter-title">The <em>Surprises</em></h2>
       <p class="chapter-text">The unexpected flowers. The "I was thinking of you" messages at 2am. The small gifts that meant everything because they said: I see you. I think of you. Even when we're not together, I'm with you. That's how we love. Not in grand gestures — in quiet, consistent, beautiful little things.</p>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-4">
         <div class="photo-item"><img src="images/sur1.jpg.jpeg" alt="" loading="lazy"></div>
@@ -590,7 +535,6 @@
         <div class="photo-item"><img src="images/sur4.jpg.jpeg" alt="" loading="lazy"></div>
       </div>
     </div>
-
     <div class="photo-section fade-in">
       <div class="photo-grid-4">
         <div class="photo-item"><img src="images/awm1.jpg.jpeg" alt="" loading="lazy"></div>
@@ -599,7 +543,6 @@
         <div class="photo-item"><img src="images/awm4.jpg.jpeg" alt="" loading="lazy"></div>
       </div>
     </div>
-
     <div class="video-section fade-in">
       <div class="video-grid-3">
         <div class="video-item"><video controls playsinline><source src="vids/sur1.mp3.mp4" type="video/mp4"></video></div>
@@ -614,8 +557,8 @@
 
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
-  <!-- CHAPTER 9 — PINK WORLD -->
-  <section class="pink-world">
+  <!-- CHAPTER 9 -->
+  <section id="chapter9" class="pink-world">
     <div class="chapter">
       <span class="chapter-num">CHAPTER NINE ✦ HER WORLD</span>
       <h2 class="chapter-title">Her <em>Pink World</em></h2>
@@ -628,7 +571,7 @@
   <div class="divider"><div class="divider-line"></div><div class="divider-icon">💗</div><div class="divider-line"></div></div>
 
   <!-- LOVE LETTER -->
-  <section>
+  <section id="letter">
     <div class="chapter">
       <span class="chapter-num">CHAPTER TEN ✦ FOR YOU</span>
       <h2 class="chapter-title">A <em>Letter</em></h2>
@@ -672,18 +615,81 @@
   </footer>
 
   <script>
+    // CURSOR
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
     // HEARTS
     const container = document.getElementById('hearts');
-    const heartChars = ['💗', '🌸', '💕', '✦', '💓'];
-    for (let i = 0; i < 25; i++) {
+    const heartChars = ['💗', '🌸', '💕', '✦', '💓', '🩷'];
+    for (let i = 0; i < 30; i++) {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.innerText = heartChars[Math.floor(Math.random() * heartChars.length)];
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.fontSize = (Math.random() * 12 + 8) + 'px';
-      heart.style.animationDuration = (Math.random() * 15 + 10) + 's';
-      heart.style.animationDelay = (Math.random() * 10) + 's';
+      heart.style.animationDuration = (Math.random() * 18 + 10) + 's';
+      heart.style.animationDelay = (Math.random() * 12) + 's';
       container.appendChild(heart);
+    }
+
+    // DAYS TOGETHER
+    const startDate = new Date('2025-11-15');
+    const today = new Date();
+    const days = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+    document.getElementById('daysCount').textContent = days;
+
+    // COUNTDOWN BAR
+    function updateCountdown() {
+      const birthday = new Date('2026-07-16');
+      const now = new Date();
+      const diff = birthday - now;
+      if (diff <= 0) {
+        document.getElementById('countdownBar').textContent = '✦ HAPPY 18TH BIRTHDAY, MY LOVE ✦ TODAY IS YOUR DAY 💗';
+        return;
+      }
+      const d = Math.floor(diff / (1000*60*60*24));
+      const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+      const s = Math.floor((diff % (1000*60)) / 1000);
+      document.getElementById('countdownBar').textContent =
+        `✦ ${d}D ${h}H ${m}M ${s}S UNTIL YOUR 18TH BIRTHDAY ✦`;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // MUSIC
+    const audio = document.getElementById('bgMusic');
+    const musicIcon = document.getElementById('musicIcon');
+    const musicWave = document.getElementById('musicWave');
+    let playing = false;
+
+    document.addEventListener('click', function startMusic() {
+      if (!playing) {
+        audio.volume = 0.3;
+        audio.play().then(() => {
+          playing = true;
+          musicIcon.className = 'fas fa-pause';
+        }).catch(() => {});
+      }
+      document.removeEventListener('click', startMusic);
+    }, { once: true });
+
+    function toggleMusic() {
+      if (playing) {
+        audio.pause();
+        playing = false;
+        musicIcon.className = 'fas fa-play';
+        musicWave.classList.add('paused');
+      } else {
+        audio.play();
+        playing = true;
+        musicIcon.className = 'fas fa-pause';
+        musicWave.classList.remove('paused');
+      }
     }
 
     // SCROLL ANIMATIONS
@@ -691,13 +697,27 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          const children = entry.target.querySelectorAll('.chapter-num, .chapter-title, .chapter-quote, .chapter-text');
-          children.forEach(child => child.classList.add('visible'));
+          entry.target.querySelectorAll('.chapter-num, .chapter-title, .chapter-quote, .chapter-text')
+            .forEach(el => el.classList.add('visible'));
         }
       });
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.fade-in, .chapter').forEach(el => observer.observe(el));
+
+    // NAV HIGHLIGHT
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.story-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      });
+    });
   </script>
 
 </body>
